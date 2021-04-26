@@ -1,0 +1,158 @@
+import React, { Component } from 'react';
+
+import { render } from 'react-dom';
+import {paragraphs, choice} from './Hello';
+import './style.css';
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      sentence: choice(),
+      text: "",
+      correctWords: 0,
+      incorrectWords: 0,
+      seconds: 60
+    };
+
+    this.textAreaRef = React.createRef();
+  }
+
+  notSameParagraphes = () => {
+    let newParagraph;
+
+    do {
+      newParagraph = choice();
+    } while(newParagraph === this.state.sentence);
+
+    this.setState({ sentence: newParagraph })
+  };
+
+  onTextChange = (e) => {
+    const text = e.target.value.trim();
+
+    const textArea = this.textAreaRef.current.innerHTML;
+    const firstWord = textArea.split(' ')[0];
+    
+    if (text.toLowerCase() === firstWord.toLowerCase()) {
+
+
+    let chk1 = textArea.split(" ");
+    chk1.shift();
+
+
+      // let chk = `<span class="highlight">${firstWord}</span> ${chk1.join(" ")}`;
+      let chk = `<span style="color: red;">${firstWord}</span> ${chk1.join(" ")}`;
+      console.log("chk--",chk)
+      this.textAreaRef.current.innerHTML = chk;
+      console.log(this.textAreaRef);
+    }
+
+    this.setState({ text });
+  };
+
+  check = () => {
+    const { text, correctWords, incorrectWords } = this.state;
+
+    const firstWord = this.state.sentence.split(' ')[0];
+
+    if (text.toLowerCase() === firstWord.toLowerCase()) {
+      const sentence = this.state.sentence.split(' ').slice(1).join(' ')
+
+      this.setState({
+        text: "",
+        sentence,
+        correctWords: correctWords + 1
+      });
+    } else {
+      const sentence = this.state.sentence.split(' ').slice(1).join(' ')
+
+      this.setState({
+        text: "",
+        sentence,
+        incorrectWords: incorrectWords + 1,
+      });
+    }
+  };
+
+  enterPressed = (e) => {
+    const code = e.keyCode || e.which;
+
+    if (code === 32 || code === 13) {
+      this.check();
+    }
+  }
+
+  tick = () => {
+    this.interval = setInterval(() => {
+      if (this.state.seconds > 0) {
+        this.setState(state => ({
+          seconds: state.seconds - 1
+        }));
+      }
+    }, 1000);
+  }
+
+  calculateAccuracy = (correctWords, inCorrectWords) => {
+    const totalTypedWords = correctWords + inCorrectWords;
+    const accuracy = (correctWords/totalTypedWords) * 100
+
+    if (!accuracy) {
+      return 0.00;
+    }
+
+    return accuracy.toFixed(2);
+  };
+
+  reset = () => {
+    this.setState({
+      text: "",
+      correctWords: 0,
+      incorrectWords: 0,
+      seconds: 60
+    });
+
+    clearInterval(this.interval);
+    this.notSameParagraphes();
+  };
+
+  render() {
+    console.log("run render function")
+    return (
+      <div>
+        {
+          this.state.seconds > 0 ? (
+            <>
+              <div ref={this.textAreaRef} >{this.state.sentence}</div>
+              <input
+                name="text"
+                type="text"
+                value={this.state.text}
+                onChange={this.onTextChange}
+                onKeyPress={this.enterPressed}
+                onFocus={this.tick}
+              />
+              <p>Correct Words: {this.state.correctWords}</p>
+              <p>In Correct Words: {this.state.incorrectWords}</p>
+            </>
+          ) : (
+              <>
+                <p>Type Words: {this.state.correctWords + this.state.incorrectWords} wpm</p>
+                <p>Correct Words: {this.state.correctWords}</p>
+                <p>Wrong Words: {this.state.incorrectWords}</p>
+                <p>Accuracy is: {
+                  this.calculateAccuracy(
+                    this.state.correctWords, this.state.incorrectWords
+                  )}%
+                </p>
+                <button onClick={this.reset} >Reset</button>
+              </>
+            )
+        }
+        <p>Count: {this.state.seconds}</p>
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById('root'));

@@ -1,0 +1,44 @@
+#score-container {
+  text-align: center;
+  font-size: 85px;
+  font-family: montserrat;
+}
+
+#score-heading {
+  display: inline;
+  margin-right: 20px;
+}
+
+#game-canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-canvas {
+  display: inline;
+}
+
+#game-over-container {
+  text-align: center;
+}
+
+#game-over-heading {
+  font-family: montserrat;
+  font-size: 30px;
+  text-align: center;
+  margin: 10px 0px;
+  font-weight: bold;
+}
+
+#restart-btn {
+  border: none;
+  outline: none;
+  background: blueviolet;
+  color: white;
+  padding: 15px 30px 15px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: montserrat;
+  cursor: pointer;
+}

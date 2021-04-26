@@ -1,0 +1,50 @@
+.warning {
+  color: #375270;
+  font-family: montserrat;
+  text-align: center;
+}
+
+.react-slider {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-slider .image {
+  width: 960px;
+  height: 500px;
+  border-radius: 10px;
+}
+
+.react-slider .right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  color: #000;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.react-slider .left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  color: #000;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.react-slider .slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.react-slider .slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+}

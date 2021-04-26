@@ -1,0 +1,28 @@
+.star {
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.rating-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.style-main-heading {
+  color: #375270;
+  font-weight: bold;
+  font-size: 50px;
+  font-family: montserrat;
+  margin: 0px;
+}
+
+.style-rating-text {
+  color: steelblue;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: montserrat;
+  margin: 0px;
+}
